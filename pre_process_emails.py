@@ -29,23 +29,25 @@ def load_dataset(path):
 
 # Pre-processing text
 # Input: @text- Raw text that needs to be processed
-#        @custom_stopwords- Additional stopwords that the user wants to add to the standard stopwordList
+#        @custom_stopwords- Additional LIST of stopwords that the user wants to add to the standard stopwordList
 # Returns: @clean_text- Processed list of words
-def cleanUp(text, custom_stopwords):
+def cleanUp(text, custom_stopwords=[]):
     # Initialising Lemmatizer object
     lemm = WordNetLemmatizer()
     
-    # Custom stopwords
+    # Collecting all my stopwords
     my_stopwords = stopwords.words('english') + list(punctuation) + custom_stopwords
     
-    clean_text = []
+    clean_text = ''
     for word in word_tokenize(unicode(text, errors='ignore')):
         w = lemm.lemmatize(word.lower())
-        if w not in my_stopwords:
-            clean_text.append(w)
+        if w not in my_stopwords and len(w)>2:
+            clean_text += w + ' '
     
-    return clean_text
+    # Because the last character is a redundant whitespace, return [:-1]
+    return clean_text[:-1]
 
+entire_email_dataset = []
 def main():
     # Load dataset
     path = '/Users/sunyambagga/GitHub/Spam_Detector/dataset'
@@ -57,10 +59,8 @@ def main():
         clean_email = cleanUp(email, ['subject'])
         clean_emails_with_labels.append((clean_email, label))
 
-    print len(clean_emails_with_labels)
-#    print clean_emails_with_labels[:2]
-#    print "\n\n\n\n\n"
-#    print clean_emails_with_labels[-2:]
+    # Right now, we have 3000 spam-emails in the list, followed by 6000 ham-emails
+    # Shuffling:
+    random.shuffle(clean_emails_with_labels)
 
-entire_email_dataset = []
-main()
+    return clean_emails_with_labels
