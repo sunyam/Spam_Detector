@@ -41,14 +41,14 @@ X_test = vectorizer.transform(x_test)
 y_pred = nb_detector.predict(X_test)
 
 # Calculate Accuracy:
-print "Accuracy: ", accuracy_score(y_test, y_pred)
+print "Naive Bayes Accuracy: ", accuracy_score(y_test, y_pred)
 
 print "\n\nSome random testing: "
 
 test = [u'article powerits online trading platform please find attached article european electricity report september 2001 kind regard sarimah black', u'need help marriage hello vlgr professi nal per dose vlgr soft per dose generc vlgr per dose clls per dose clls soft per dose sinneth wrongeth soul hate love death son let depart thine eye keep sound wisdom discretion say hated instruction heart despised reproof house righteous much treasure revenue wicked trouble better little righteousness great revenue without right']
 
 x_te = vectorizer.transform(test)
-print detector.predict(x_te)
+print nb_detector.predict(x_te)
 # Should print ['ham','spam']
 
 # Using SVM:
