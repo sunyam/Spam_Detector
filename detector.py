@@ -50,3 +50,16 @@ test = [u'article powerits online trading platform please find attached article 
 x_te = vectorizer.transform(test)
 print detector.predict(x_te)
 # Should print ['ham','spam']
+
+# Using SVM:
+print "\n\nSupport Vector Machines: "
+
+from sklearn import svm
+
+svm_detector = svm.SVC(C=10000)
+
+svm_detector.fit(X, y_train)
+
+y_svm_pred = svm_detector.predict(X_test)
+
+print "SVM Accuracy: ", accuracy_score(y_test, y_svm_pred)
